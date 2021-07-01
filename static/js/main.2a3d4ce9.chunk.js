@@ -1,0 +1,2 @@
+(this["webpackJsonpopen-block-web-client"]=this["webpackJsonpopen-block-web-client"]||[]).push([[0],{4:function(e,t,n){"use strict";n.r(t);var c=n(0),o=n.n(c),s=n(3),i=n.n(s),r=n(2);i.a.render(Object(r.jsx)(o.a.StrictMode,{children:Object(r.jsx)("p",{children:"Test"})}),document.getElementById("root"))}},[[4,1,2]]]);
+//# sourceMappingURL=main.2a3d4ce9.chunk.js.map
