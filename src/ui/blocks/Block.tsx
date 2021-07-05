@@ -1,3 +1,5 @@
+import { Properties } from "csstype";
+
 export type Block = {
   type: String;
   backgroundColour?: string;
@@ -16,9 +18,17 @@ export type BlockProps = {
   id: number;
   posX: number;
   posY: number;
+  style?: Properties;
 };
 
 export function BlockRender(props: BlockProps) {
+  const style = {
+    ...props.style,
+    marginLeft: props.block.displayTextOffsetX,
+    marginTop: props.block.displayTextOffsetY,
+    color: props.block.displayTextColour,
+  };
+
   return (
     <div
       draggable
@@ -26,15 +36,7 @@ export function BlockRender(props: BlockProps) {
         background: props.block.backgroundColour,
       }}
     >
-      <p
-        style={{
-          marginLeft: props.block.displayTextOffsetX,
-          marginTop: props.block.displayTextOffsetY,
-          color: props.block.displayTextColour,
-        }}
-      >
-        {props.block.displayText}
-      </p>
+      <p style={style}>{props.block.displayText}</p>
     </div>
   );
 }

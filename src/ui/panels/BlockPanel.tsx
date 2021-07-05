@@ -5,6 +5,8 @@ import Sider from "antd/lib/layout/Sider";
 import { Content } from "antd/lib/layout/layout";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "./../../store/hooks";
+import { blocks } from "./../../store/BlocksSlice";
 
 function BlockList(): React.ReactElement {
   return (
@@ -25,27 +27,41 @@ function BlockList(): React.ReactElement {
 }
 
 function BlockArea(): React.ReactElement {
-  return <div style={{ width: "90%", height: "100%" }}></div>;
+  const state = useAppSelector(blocks);
+
+  return (
+    <div style={{ width: "90%", height: "100%" }}>
+      {state.map((props) => BlockRender(props))}
+    </div>
+  );
 }
 
 function Page(): React.ReactElement {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout style={{ height: "100%", maxHeight: "100%", minHeight: "500px" }}>
+    <Layout>
       <Sider
         className="site-layout-background"
         collapsible
-        collapsedWidth="0"
-        width="20%"
+        collapsed={collapsed}
         theme="dark"
         style={{ height: "100%", minHeight: "100%" }}
         onCollapse={() => setCollapsed(!collapsed)}
       >
         <BlockList />
       </Sider>
-      <Content>
-        <BlockArea />
-      </Content>
+      <Layout className="site-layout">
+        <Content
+          className="site-layout-background"
+          style={{
+            margin: "24px 16px",
+            padding: 24,
+            minHeight: 280,
+          }}
+        >
+          <BlockArea />
+        </Content>
+      </Layout>
     </Layout>
   );
 }
