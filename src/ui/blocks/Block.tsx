@@ -1,5 +1,5 @@
 import { Properties } from "csstype";
-import React, { useState } from "react";
+import React, { TouchEventHandler, useState } from "react";
 
 export type Block = {
   type: string;
@@ -51,6 +51,8 @@ export function BlockRender(props: BlockProps) {
   const [xOffsetPos, setXOffsetPos] = useState(0);
   const [yOffsetPos, setYOffsetPos] = useState(0);
 
+  const left = xPos <= 200 ? 200 : xPos - 200;
+
   const style = {
     ...props.style,
     left: xPos,
@@ -63,12 +65,31 @@ export function BlockRender(props: BlockProps) {
   };
 
   const onDrag = (event: React.DragEvent<HTMLDivElement>) => {
-    if (event.pageX <= 200 || event.pageY <= 0) {
+    onMove(event.pageX, event.pageY);
+  };
+
+  const onMove = (x: number, y: number) => {
+    if (x <= 200 || y <= 0) {
       return;
     }
-    console.log("X: " + event.pageX + " | Y: " + event.pageY);
-    setXPos(event.pageX - 200 - xOffsetPos);
-    setYPos(event.pageY - yOffsetPos);
+
+    console.log(
+      "X: " +
+        x +
+        " | Y: " +
+        y +
+        " | OffsetX: " +
+        xOffsetPos +
+        " | OffsetY: " +
+        yOffsetPos
+    );
+
+    setXPos(x - xOffsetPos);
+    setYPos(y - yOffsetPos);
+  };
+
+  const onTouch = (event: React.TouchEvent<HTMLDivElement>) => {
+    onMove(event.touches[0].pageX, event.touches[0].pageY);
   };
 
   const internal = props.block.internal;
@@ -77,6 +98,7 @@ export function BlockRender(props: BlockProps) {
     <div
       className={"absolute-box"}
       onDrag={onDrag}
+      onTouchMove={onTouch}
       style={style}
       onMouseDown={(event) => {
         setXOffsetPos(event.nativeEvent.offsetX);

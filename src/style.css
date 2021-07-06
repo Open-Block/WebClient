@@ -1,5 +1,5 @@
 .absolute-box {
-  position: relative;
+  position: absolute;
 }
 
 #components-layout-demo-side .logo {
