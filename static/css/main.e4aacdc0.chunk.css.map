@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/style.css"],"names":[],"mappings":"AAAA,cACE,iBACF","file":"main.e4aacdc0.chunk.css","sourcesContent":[".absolute-box {\r\n  position: absolute;\r\n}\r\n"]}
