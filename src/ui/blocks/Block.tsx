@@ -1,4 +1,5 @@
 import { Properties } from "csstype";
+import React, { useState } from "react";
 
 export type Block = {
   type: String;
@@ -16,27 +17,56 @@ export type ValueBlock<V> = Block & {
 export type BlockProps = {
   block: Block;
   id: number;
-  posX: number;
-  posY: number;
   style?: Properties;
 };
 
-export function BlockRender(props: BlockProps) {
+export function TypeBlockRender(props: BlockProps) {
   const style = {
     ...props.style,
+    displayStyle: "inline-block",
+    background: props.block.backgroundColour,
+  };
+  const displayStyle = {
     marginLeft: props.block.displayTextOffsetX,
     marginTop: props.block.displayTextOffsetY,
     color: props.block.displayTextColour,
   };
 
   return (
-    <div
-      draggable
-      style={{
-        background: props.block.backgroundColour,
-      }}
-    >
-      <p style={style}>{props.block.displayText}</p>
+    <div style={style}>
+      <p style={displayStyle}>{props.block.displayText}</p>
+    </div>
+  );
+}
+
+export function BlockRender(props: BlockProps) {
+  const [xPos, setXPos] = useState(0);
+  const [yPos, setYPos] = useState(0);
+  const style = {
+    ...props.style,
+    left: xPos,
+    top: yPos,
+    displayStyle: "inline-block",
+    background: props.block.backgroundColour,
+  };
+  const displayStyle = {
+    marginLeft: props.block.displayTextOffsetX,
+    marginTop: props.block.displayTextOffsetY,
+    color: props.block.displayTextColour,
+  };
+
+  const onDrag = (event: React.DragEvent<HTMLDivElement>) => {
+    if (event.pageX === 0 && event.pageY === 0) {
+      return;
+    }
+    console.log("onDrag: " + event.pageX + " | " + event.pageY);
+    setXPos(event.pageX);
+    setYPos(event.pageY);
+  };
+
+  return (
+    <div className={"absolute-box"} onDrag={onDrag} style={style}>
+      <p style={displayStyle}>{props.block.displayText}</p>
     </div>
   );
 }

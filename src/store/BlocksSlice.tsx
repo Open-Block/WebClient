@@ -12,8 +12,6 @@ const initialState: BlocksState = {
     {
       id: 0,
       block: booleanBlock(true),
-      posY: 0,
-      posX: 0,
     },
   ],
 };
@@ -29,7 +27,7 @@ export const blocksSlice = createSlice({
       state.value = [...state.value, action.payload];
     },
     remove: (state, action: PayloadAction<number>) => {
-      state.value = state.value.filter((value) => action.payload != value.id);
+      state.value = state.value.filter((value) => action.payload !== value.id);
     },
   },
 });
